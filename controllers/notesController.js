@@ -3,10 +3,10 @@ const path = require('path')
 const Note = require('../models/noteModel')
 const AppError = require('../models/AppError')
 const { marked } = require('marked')
-const { nextTick } = require('process')
+const enqueueWrite = require('../middleware/writeQueue')
 
 // Define the path to the notes file
-const notesFile = path.join(__dirname, '..', 'notes.json')
+const notesFile = path.join(__dirname, '..', process.env.NOTES_FILE_PATH || 'notes.json')
 let notes = []
 
 async function loadNotes() {
@@ -17,7 +17,7 @@ async function loadNotes() {
     } catch (error) {
         if (error.code === 'ENOENT') {
             notes = []
-            console.log('notes.json not found. Staring with an empy array')
+            console.log('notes.json not found. Staring with an empty array')
         } else {
             console.error('Error parsing notes from file:', error)
             notes = []
@@ -30,7 +30,7 @@ loadNotes()
 // Helper function to save notes to file
 async function saveNotesToFile() {
     try {
-       await fs.writeFile(notesFile, JSON.stringify(notes, null, 2))
+        await enqueueWrite(() => fs.writeFile(notesFile, JSON.stringify(notes, null, 2)))
     } catch (error) {
         console.error('Error writing notes to file:', error)
     }
@@ -55,7 +55,7 @@ exports.createNote = async (req, res, next) => {
         }
         const note = new Note(Date.now(), title, content)
         notes.push(note)
-        saveNotesToFile()
+        await saveNotesToFile()
         res.status(201).json({ message: 'Note saved', note })
     } catch (error) {
         next(error)
@@ -103,7 +103,7 @@ exports.updateNote = async (req, res, next) => {
 
         if (noteIndex !== -1) {
             notes[noteIndex] = { ...notes[noteIndex], title, content }
-            saveNotesToFile()
+            await saveNotesToFile()
             res.json({ message: 'Note updated', note: notes[noteIndex] })
         } else {
             return next(new AppError('Note not found', 404))
@@ -121,7 +121,7 @@ exports.deleteNote = async (req, res, next) => {
 
         if (noteIndex !== -1) {
             const deletedNote = notes.splice(noteIndex, 1)
-            saveNotesToFile()
+            await saveNotesToFile()
             res.json({ message: 'Note deleted', note: deletedNote[0] })
         } else {
             return next(new AppError('Note not found', 404))
@@ -136,26 +136,26 @@ exports.uploadNote = async (req, res, next) => {
     try {
         const file = req.file
         if (!file) {
-            return next(AppError('No file uploaded', 400))
+            return next(new AppError('No file uploaded', 400))
+        }
+        const data = await fs.readFile(file.path, 'utf-8')
+        const note = new Note(Date.now(), file.originalname, data)
+        notes.push(note)
+        await saveNotesToFile()
+
+        // Delete the uplaoded file to clean up
+        try {
+            await fs.unlink(file.path)
+        } catch (error) {
+            console.error('Error deleting file:', error)
         }
 
-        fs.readFile(file.path, 'utf-8', (err, data) => {
-            if (err) {
-                return next(new AppError('Error reading file', 500))
-            }
-
-            const note = new Note(Date.now(), file.originalname, data)
-            notes.push(note)
-            saveNotesToFile()
-
-            // Delete the uploaded file to clean up
-            fs.unlink(file.path, (err) => {
-                if (err) console.error('Error deleting file:', err)
-            })
-
-            res.json({ message: 'File uploaded and note saved', note })
+        res.status(201).json({
+            status: 'success',
+            message: 'File upload and note save',
+            data: { note },
         })
     } catch (error) {
-        next(error)
+        return next(new AppError('Error processing file', 500))
     }
 }

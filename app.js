@@ -1,6 +1,9 @@
 const express = require('express')
-const app = express()
 const cors = require('cors')
+const morgan = require('morgan')
+const path = require('path')
+const swaggerUi = require('swagger-ui-express')
+const YAML = require('yamljs')
 
 
 const notesRouter = require('./routes/notes')
@@ -9,10 +12,23 @@ const grammarRouter = require('./routes/grammar')
 const notFoundHandler = require('./middleware/notFoundHandler')
 const errorHandler = require('./middleware/errorHandler')
 
+const app = express()
+
+// Load Swagger document
+const swaggerDocument = YAML.load(path.join(__dirname, 'docs', 'swagger.yaml'))
+
+
 // Middlewares
 app.use(cors())
 app.use(express.json())
 app.use(express.urlencoded({ extended: true}))
+
+if(process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'))
+}
+
+// Serve Swagger UI
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
 // Routes
 app.use('/notes', notesRouter)
@@ -25,7 +41,8 @@ app.use(notFoundHandler)
 app.use(errorHandler)
 
 // Start the Server
-const PORT = 3000;
+const PORT = process.env.PORT || 3000
+
 app.listen(PORT, () => {
     console.log(`Sever started on http://localhost:${PORT}`)
 })

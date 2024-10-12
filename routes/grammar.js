@@ -2,6 +2,6 @@ const express = require('express')
 const router = express.Router()
 const grammarController = require('../controllers/grammarController')
 
-router.post('/check', grammarController.checkGrammar)
+router.post('/grammar-check', grammarController.checkGrammar)
 
 module.exports = router

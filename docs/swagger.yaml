@@ -1,0 +1,328 @@
+openapi: 3.0.0
+info:
+  title: Markdown Note-Taking App API
+  version: 1.0.0
+  description: API documentation for the Markdown Note-Taking App
+servers:
+  - url: http://localhost:3000
+    description: Development server
+paths:
+  /notes:
+    get:
+      summary: Retrieve a list of notes
+      responses:
+        '200':
+          description: A list of notes
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      notes:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Note'
+    post:
+      summary: Create a new note
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '201':
+          description: Note created successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Note saved
+                  data:
+                    type: object
+                    properties:
+                      note:
+                        $ref: '#/components/schemas/Note'
+  /notes/{id}:
+    get:
+      summary: Retrieve a single note by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The note ID
+      responses:
+        '200':
+          description: A single note
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      note:
+                        $ref: '#/components/schemas/Note'
+        '404':
+          description: Note not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      summary: Update a note by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The note ID
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NoteInput'
+      responses:
+        '200':
+          description: Note updated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Note updated
+                  data:
+                    type: object
+                    properties:
+                      note:
+                        $ref: '#/components/schemas/Note'
+        '404':
+          description: Note not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      summary: Delete a note by ID
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: integer
+          required: true
+          description: The note ID
+      responses:
+        '200':
+          description: Note deleted successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  message:
+                    type: string
+                    example: Note deleted
+                  data:
+                    type: object
+                    properties:
+                      note:
+                        $ref: '#/components/schemas/Note'
+        '404':
+          description: Note not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /grammar/grammar-check:
+    post:
+      summary: Check grammar of the provided text
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                text:
+                  type: string
+                  example: "This are bad things."
+      responses:
+        '200':
+          description: Grammar check successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: success
+                  data:
+                    type: object
+                    properties:
+                      correctedText:
+                        type: string
+                        example: "These are bad things."
+                      suggestions:
+                        type: array
+                        items:
+                          $ref: '#/components/schemas/Suggestion'
+        '400':
+          description: Bad Request - Text is required
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Note:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 1728745278161
+        title:
+          type: string
+          example: "sample_two.md"
+        content:
+          type: string
+          example: "# This is sample two markdown"
+    NoteInput:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Sample Note"
+        content:
+          type: string
+          example: "This is a sample note."
+      required:
+        - title
+        - content
+    Suggestion:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "Possible spelling mistake found."
+        shortMessage:
+          type: string
+          example: "Spelling mistake"
+        replacements:
+          type: array
+          items:
+            type: object
+            properties:
+              value:
+                type: string
+                example: "bad"
+              shortDescription:
+                type: string
+                example: "opposite of 'good'"
+        offset:
+          type: integer
+          example: 9
+        length:
+          type: integer
+          example: 4
+        context:
+          type: object
+          properties:
+            text:
+              type: string
+              example: "This are bads things."
+            offset:
+              type: integer
+              example: 9
+            length:
+              type: integer
+              example: 4
+        sentence:
+          type: string
+          example: "This are bads things."
+        type:
+          type: object
+          properties:
+            typeName:
+              type: string
+              example: "UnknownWord"
+        rule:
+          type: object
+          properties:
+            id:
+              type: string
+              example: "MORFOLOGIK_RULE_EN_US"
+            description:
+              type: string
+              example: "Possible spelling mistake"
+            issueType:
+              type: string
+              example: "misspelling"
+            category:
+              type: object
+              properties:
+                id:
+                  type: string
+                  example: "TYPOS"
+                name:
+                  type: string
+                  example: "Possible Typo"
+            isPremium:
+              type: boolean
+              example: false
+            confidence:
+              type: number
+              format: float
+              example: 0.68
+        ignoreForIncompleteSentence:
+          type: boolean
+          example: false
+        contextForSureMatch:
+          type: integer
+          example: 0
+    Error:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 404
+        status:
+          type: string
+          example: "error"
+        message:
+          type: string
+          example: "Note not found"
