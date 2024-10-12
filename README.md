@@ -65,7 +65,7 @@ npm install
 
  Start the server in production mode:
  ```bash
- npm run start:prol
+ npm run start:prod
  ```
 ## Default Start
 
