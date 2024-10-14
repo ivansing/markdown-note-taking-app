@@ -3,7 +3,7 @@ const path = require('path')
 const Note = require('../models/noteModel')
 const AppError = require('../models/AppError')
 const { marked } = require('marked')
-const enqueueWrite = require('../middleware/writeQueue')
+// const {enqueueWrite} = require('../middleware/writeQueue')
 
 // Define the path to the notes file
 const notesFile = path.join(__dirname, '..', process.env.NOTES_FILE_PATH || 'notes.json')
@@ -30,7 +30,7 @@ loadNotes()
 // Helper function to save notes to file
 async function saveNotesToFile() {
     try {
-        await enqueueWrite(() => fs.writeFile(notesFile, JSON.stringify(notes, null, 2)))
+        await fs.writeFile(notesFile, JSON.stringify(notes, null, 2))
     } catch (error) {
         console.error('Error writing notes to file:', error)
     }

@@ -6,7 +6,7 @@
     "start:dev": "dotenv -e .env.development nodemon app.js",
     "start:prod": "dotenv -e .env.production node app.js",
     "start": "nodemon app.js",
-    "test": "ECHO test"
+    "test": "mocha tests/**/*.test.js"
   },
   "keywords": [],
   "author": "",
