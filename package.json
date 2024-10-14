@@ -2,11 +2,11 @@
   "name": "markdown-note-taking-app",
   "version": "1.0.0",
   "main": "app.js",
-  "scripts": {
+    "scripts": {
     "start:dev": "dotenv -e .env.development nodemon app.js",
     "start:prod": "dotenv -e .env.production node app.js",
-    "start": "node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "nodemon app.js",
+    "test": "ECHO test"
   },
   "keywords": [],
   "author": "",
@@ -25,7 +25,10 @@
     "yamljs": "^0.3.0"
   },
   "devDependencies": {
+    "chai": "^4.5.0",
     "dotenv-cli": "^7.4.2",
-    "nodemon": "^3.1.7"
+    "mocha": "^10.7.3",
+    "nodemon": "^3.1.7",
+    "supertest": "^7.0.0"
   }
 }

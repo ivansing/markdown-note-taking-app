@@ -41,10 +41,12 @@ app.use(notFoundHandler)
 app.use(errorHandler)
 
 // Start the Server
-const PORT = process.env.PORT || 3000
+if (require.main === module) {
+    const PORT = process.env.PORT || 3000
+    app.listen(PORT, () => {
+        console.log(`Sever started on http://localhost:${PORT}`)
+    })
+}
 
-app.listen(PORT, () => {
-    console.log(`Sever started on http://localhost:${PORT}`)
-})
 
 module.exports = app

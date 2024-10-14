@@ -1,33 +1,29 @@
-const writeQueue = []
-let isWriting = false
-
-async function processQueue() {
-    if (writeQueue.length === 0 || isWriting) return 
-
-    isWriting = true 
-    const { fn, resolve, reject } = writeQueue.shift()
-
-    try {
-        const result = await fn()
-        resolve(result)
-    } catch (error) {
-        reject(error)
-    } finally {
-        isWriting = false
-        processQueue()
-    }
-}
-
-function enqueueWrite(fn) {
+function enqueueWrite(writeOperation) {
+    console.log('enqueueWrite: Operation enqueued');
     return new Promise((resolve, reject) => {
-        writeQueue.push({ fn, resolve, reject})
-        processQueue()
-    })
+        queue.push({ writeOperation, resolve, reject });
+        processQueue();
+    });
 }
 
-module.exports = enqueueWrite
+function processQueue() {
+    if (isWriting || queue.length === 0) return;
 
-// enqueueWrite: 
-// Ensures that write operations are queued and processed one at a time.
-// processQueue: 
-// Handles the sequential processing of queued write operations.
+    isWriting = true;
+    const { writeOperation, resolve, reject } = queue.shift();
+    console.log('enqueueWrite: Processing write operation');
+
+    writeOperation()
+        .then(() => {
+            console.log('enqueueWrite: Write operation completed');
+            isWriting = false;
+            resolve();
+            processQueue();
+        })
+        .catch((err) => {
+            console.error('enqueueWrite: Write operation failed', err);
+            isWriting = false;
+            reject(err);
+            processQueue();
+        });
+}
