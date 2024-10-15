@@ -11,6 +11,7 @@ A backend application for managing Markdown notes with grammar checking capabili
 - [📦 Features](#-features)
 - [🚀 Installation](#-installation)
 - [🔧 Usage](#-usage)
+- [🧪 Testing](#-testing)
 - [🛠 API Documentation](#-api-documentation)
 - [🌐 Environment Variables](#-environment-variables)
 - [📜 Scripts](#-scripts)
@@ -32,7 +33,7 @@ A backend application for managing Markdown notes with grammar checking capabili
 ### 1. **Clone the Repository**
 
 ```bash
-git clone https://github.com/your-username/markdown-note-taking-app.git
+git clone https://github.com/ivansing/markdown-note-taking-app.git
 cd markdown-note-taking-app
 ```
 
@@ -65,7 +66,7 @@ npm install
 
  Start the server in production mode:
  ```bash
- npm run start:prod
+ npm run start:pro
  ```
 ## Default Start
 
@@ -73,6 +74,65 @@ Start the server using default enviroment (`node app.js`):
 ```bash
 npm start
 ```
+
+## 🧪 Testing
+
+A comprehensive test suite has been set up using Mocha, Chai, and Supertest to ensure the reliability and functionality of the API endpoints.
+
+**Test Summary**
+```bash
+📚 Notes API Endpoints
+Notes loaded from file.
+    ✔ ✔ should create a new note
+    ✔ ✔ should retrieve a single note
+    ✔ ✔ should retrieve all notes
+    ✔ ✔ should update the created note
+    ✔ ✔ should delete the created note
+    ✔ ✔ should upload a markdown file and create a new note
+    ✔ ✔ should check grammar of a given text
+
+🔍 Test Summary
+✅ Passed: 7 / 7
+❌ Failed: 0 / 7
+🎉 All tests passed successfully!
+
+7 passing (103ms)
+```
+## Running the Tests
+Ensure your server is running before executing the tests.
+ 1. **Start theh Server**
+    
+    In a separate terminal:
+    ```bash
+    node app.js
+    ```
+
+    **Expected Output**
+    ```bash
+    Server started on http://localhost:3000
+    Notes loaded from file.
+    ```
+ 2. **Exucute the Test Suite**
+    ```bash
+    npm test
+    ```  
+    **Or, using npx:**
+    ```bash
+     npx mocha tests/testNote.test.js
+    ```
+## Understanding the Test Results
+- ✔ Passed Tests: Indicates successful execution of the test case.
+- ❌ Failed Tests: Indicates that the test case did not pass as expected.
+- 🎉 All tests passed successfully!: Confirmation that all tests have been executed without any failures.
+
+## Test Cases Covered
+ 1. Create a New Note
+ 2. Retrieve a Single Note
+ 3. Retrieve All Notes
+ 4. Update a Note
+ 5. Delete a Note
+ 6. Upload a Markdown File and Create a New Note
+ 7. Check Grammar of a Given Text
 
 ## 🛠 API Documentation
 

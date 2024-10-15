@@ -130,10 +130,30 @@ function runTests() {
                     done();
                 });
         });
-        
-    });
 
-   
+        // 📚 Grammar Check Test
+        it('✔ should check grammar of a given text', (done) => {
+            const textWithErrors = 'This are bad sentence.';
+            request(app)
+                .post('/grammar/grammar-check') // Updated endpoint
+                .send({ text: textWithErrors }) // Ensure the key matches your controller
+                .expect(200)
+                .end((err, res) => {
+                    if (err) return done(err);
+                    expect(res.body).to.have.property('data');
+                    expect(res.body.data).to.have.property('suggestions');
+                    expect(res.body.data.suggestions).to.be.an('array').that.is.not.empty;
+                    // Optionally, check specific grammar suggestions
+                    const firstMatch = res.body.data.suggestions[0];
+                    expect(firstMatch).to.have.property('message');
+                    expect(firstMatch).to.have.property('shortMessage');
+                    expect(firstMatch).to.have.property('offset');
+                    expect(firstMatch).to.have.property('length');
+                    done();
+                });
+        });
+        
+    });   
 }
 
 runTests()
