@@ -43,6 +43,7 @@ dist/
 # 📁 Testing
 # ---------------------------
 coverage/
+notes.json
 
 # ---------------------------
 # 📁 OS and IDE Specific Files
