@@ -13,7 +13,14 @@ async function loadNotes() {
     try {
         const data = await fs.readFile(notesFile, 'utf-8')
         notes = data.trim().length ? JSON.parse(data) : []
-        console.log('Notes loaded from file.')
+       
+        // Ensure all notes have createdAt; if missing, se to current time
+        notes = notes.map(note => {
+            if (!note.createdAt) {
+                return { ...note, createAt: new Date().toISOString()}
+            }
+            return note
+        })
     } catch (error) {
         if (error.code === 'ENOENT') {
             notes = []
@@ -102,6 +109,8 @@ exports.updateNote = async (req, res, next) => {
         const noteIndex = notes.findIndex(n => n.id === noteId)
 
         if (noteIndex !== -1) {
+
+            // Preserve the original createdAt
             notes[noteIndex] = { ...notes[noteIndex], title, content }
             await saveNotesToFile()
             res.json({ message: 'Note updated', note: notes[noteIndex] })

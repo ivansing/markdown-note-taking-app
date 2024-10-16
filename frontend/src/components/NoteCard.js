@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import styles from './NoteCard.module.css';
+import axios from 'axios';
 
 const NoteCard = ({ note }) => {
   const handleDelete = async () => {
@@ -7,13 +8,11 @@ const NoteCard = ({ note }) => {
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/notes/${note.id}`, {
-        method: 'DELETE',
-      });
+      const response = await axios.delete(`${process.env.NEXT_PUBLIC_API_BASE_URL}/notes/${note.id}`);
 
-      if (response.ok) {
+      if (response.status === 200) {
         alert('Note deleted successfully.');
-        // Optionally, refresh the notes list or remove the deleted note from state
+        // Refresh the page to reflect the deletion
         window.location.reload();
       } else {
         alert('Failed to delete the note.');
@@ -23,17 +22,21 @@ const NoteCard = ({ note }) => {
       alert('An error occurred while deleting the note.');
     }
   };
+  
+
+
+   
 
   return (
     <div className={styles.card}>
       <h3>{note.title}</h3>
-      <p>{new Date(note.createdAt).toLocaleDateString()}</p>
+      
       <div className={styles.actions}>
-        <Link href={`/notes/${note.id}`} className={styles.viewButton}>
-          View
+        <Link href={`/notes/${note.id}`} className={styles.viewButton}>View
+         
         </Link>
-        <Link href={`/notes/${note.id}/edit`} className={styles.editButton}>
-          Edit
+        <Link href={`/notes/${note.id}/edit`} className={styles.editButton}>Edit
+          
         </Link>
         <button onClick={handleDelete} className={styles.deleteButton}>
           Delete

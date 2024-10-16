@@ -2,6 +2,8 @@ import { useRouter } from 'next/router';
 import Navbar from '../../components/Navbar';
 import axios from 'axios';
 import styles from '../../styles/NoteDetail.module.css';
+import Link from 'next/link';
+import ReactMarkdown from 'react-markdown';
 
 const NoteDetail = ({ note, error }) => {
   const router = useRouter();
@@ -36,11 +38,17 @@ const NoteDetail = ({ note, error }) => {
       <div className={styles.container}>
         <h1 className={styles.title}>{note.title}</h1>
         <p className={styles.date}>{new Date(note.createdAt).toLocaleDateString()}</p>
-        <div
-          className={styles.content}
-          dangerouslySetInnerHTML={{ __html: note.htmlContent }}
-        ></div>
-        {/* Add Edit and Delete buttons if desired */}
+        <div className={styles.content}>
+          <ReactMarkdown>{note.content}</ReactMarkdown>
+        </div>
+        <div className={styles.actions}>
+          <Link href={`/notes/${id}/edit`} className={styles.editButton}>
+
+          </Link>
+          <Link href="/" className={styles.backButton}>Back to Home
+
+          </Link>
+        </div>
       </div>
     </>
   );
@@ -50,12 +58,12 @@ export async function getServerSideProps(context) {
   const { id } = context.params;
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/notes/${id}/html`);
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BASE_URL}/notes/${id}`);
     const note = response.data;
     return { props: { note } };
   } catch (error) {
     console.error('Error fetching note:', error.message);
-    return { props: { note: null, error: error.message } };
+    return { props: { note: null, error: error.response?.data?.message || 'Failed to fetch note.' } };
   }
 }
 

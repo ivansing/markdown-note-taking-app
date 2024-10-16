@@ -3,7 +3,6 @@ import Navbar from "@/components/Navbar";
 import styles from '../../styles/Upload.module.css';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import { redirect } from 'next/navigation';
 
 const UploadPage = () => {
     const router = useRouter();
@@ -105,11 +104,11 @@ const UploadPage = () => {
         <>
             <Navbar /> 
             <div className={styles.container}>
-                <h1>Create or Upload a Note</h1>
+                <h1 className={styles.title}>Create or Upload a Note</h1>
                 
                 {/* Create Note Section */}
                 <div className={styles.createNote}>
-                    <h2>Create a New Note</h2>
+                    <h2 className={styles.sectionTitle}>Create a New Note</h2>
                     <form onSubmit={handleCreateNote} className={styles.form}>
                         <input 
                             type="text" 
@@ -136,7 +135,7 @@ const UploadPage = () => {
                 
                 {/* Upload Markdown Section */}
                 <div className={styles.uploadMarkdown}>
-                    <h2>Upload a Markdown File</h2>
+                    <h2 className={styles.sectionTitle}>Upload a Markdown File</h2>
                     <form onSubmit={handleUploadMarkdown} className={styles.form}>
                         <input 
                             type="file" 
