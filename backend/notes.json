@@ -1,20 +1,5 @@
 [
   {
-    "id": 1728844181173,
-    "title": "Test Note",
-    "content": "This is a manual test note."
-  },
-  {
-    "id": 1728844207821,
-    "title": "Test Note",
-    "content": "This is a manual test note."
-  },
-  {
-    "id": 1728865754938,
-    "title": "Test Note",
-    "content": "This is a test note."
-  },
-  {
     "id": 1728865861257,
     "title": "Test Note",
     "content": "This is a test note."
@@ -193,5 +178,85 @@
     "id": 1729010705535,
     "title": "sample.md",
     "content": "# Sample Note\n\nThis is a **sample** markdown note for testing the upload functionality.\n\n- Item 1\n- Item 2\n- Item 3"
+  },
+  {
+    "id": 1729042323983,
+    "title": "Added UI note ",
+    "content": "Added note with UI"
+  },
+  {
+    "id": 1729042388500,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
+  },
+  {
+    "id": 1729042938012,
+    "title": "Test Note",
+    "content": "# Hello World"
+  },
+  {
+    "id": 1729043013497,
+    "title": "test title from UI",
+    "content": "TEST UI from frontend"
+  },
+  {
+    "id": 1729043044210,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
+  },
+  {
+    "id": 1729043856877,
+    "title": "asdg ggdg",
+    "content": "dgasdg gasdg"
+  },
+  {
+    "id": 1729043881347,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
+  },
+  {
+    "id": 1729043991223,
+    "title": "asdf sdf",
+    "content": "sdfs df"
+  },
+  {
+    "id": 1729044435246,
+    "title": "qwetq",
+    "content": "qwerqwr"
+  },
+  {
+    "id": 1729044573598,
+    "title": "adsfa",
+    "content": "asdfad"
+  },
+  {
+    "id": 1729044899217,
+    "title": "asdfad",
+    "content": "asdfds dgadsga"
+  },
+  {
+    "id": 1729045004567,
+    "title": "asdfa",
+    "content": "asdfadf"
+  },
+  {
+    "id": 1729045060035,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
+  },
+  {
+    "id": 1729045150832,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
+  },
+  {
+    "id": 1729045529936,
+    "title": "asfaa",
+    "content": "sasdfasdf"
+  },
+  {
+    "id": 1729045538806,
+    "title": "sample.md",
+    "content": "# Sample File\\nThis is the content of uploaded file."
   }
 ]

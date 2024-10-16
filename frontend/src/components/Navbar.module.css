@@ -1,0 +1,33 @@
+/* frontend/src/components/Navbar.module.css */
+
+.navbar {
+    width: 100%;
+    background-color: var(--gray-alpha-200);
+    padding: 16px 32px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo a {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--foreground);
+  }
+  
+  .navLinks {
+    list-style: none;
+    display: flex;
+    gap: 24px;
+  }
+  
+  .navLinks li a {
+    color: var(--foreground);
+    text-decoration: none;
+    font-size: 1rem;
+  }
+  
+  .navLinks li a:hover {
+    text-decoration: underline;
+  }
+  
