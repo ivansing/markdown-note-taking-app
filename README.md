@@ -191,6 +191,7 @@ Notes loaded from file.
 🎉 All tests passed successfully!
 
 7 passing (103ms)
+```
 
 ## Running the Tests
 Ensure your server is running before executing the tests.
