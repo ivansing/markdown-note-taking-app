@@ -323,7 +323,7 @@ Manage different configurations for development and production using .env files.
 
 🤝 Contributing
 
-Contributions are welcome! Please see [CONTRIBUTING.md]() for guidelines on how to contribute to this project.
+Contributions are welcome! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on how to contribute to this project.
 
 1. Fork the Repository
 
