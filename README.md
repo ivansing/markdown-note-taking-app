@@ -7,7 +7,7 @@
 A full-stack application for managing Markdown notes with grammar checking capabilities. Built with **Express.js** for the backend and **Next.js** for the frontend, it offers CRUD operations, file uploads, and integrates with LanguageTool for grammar corrections. The application includes interactive Swagger UI for comprehensive API documentation.
 
 **Live Demo**:
-**Live Demo:** [https://markdown-note-taking-app-v5vc-3yiqnvp3x-ivans-projects-9dbcc5b6.vercel.app/](https://markdown-note-taking-app-v5vc-3yiqnvp3x-ivans-projects-9dbcc5b6.vercel.app/)
+[https://markdown-note-taking-app-v5vc-3yiqnvp3x-ivans-projects-9dbcc5b6.vercel.app/](https://markdown-note-taking-app-v5vc-3yiqnvp3x-ivans-projects-9dbcc5b6.vercel.app/)
 
 
 ## 📚 Table of Contents
