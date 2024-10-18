@@ -71,6 +71,7 @@ next-env.d.ts
 *.swp
 *.lock
 *.gzip
+*.zip
 
 # ---------------------------
 # 📁 Vercel

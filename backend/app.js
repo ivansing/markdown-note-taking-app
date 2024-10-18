@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const cors = require('cors')
 const morgan = require('morgan')
@@ -42,7 +44,7 @@ app.use(errorHandler)
 
 // Start the Server
 if (require.main === module) {
-    const PORT = process.env.PORT || 3000
+    const PORT = process.env.PORT || 5000
     app.listen(PORT, '127.0.0.1', () => {
         console.log(`Sever started on http://localhost:${PORT}`)
     })
