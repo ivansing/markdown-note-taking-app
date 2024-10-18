@@ -4,6 +4,8 @@ info:
   version: 1.0.0
   description: API documentation for the Markdown Note-Taking App
 servers:
+  - url: /
+    description: Production server
   - url: http://localhost:3000
     description: Development server
 paths:

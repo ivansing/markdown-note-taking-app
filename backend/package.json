@@ -5,7 +5,7 @@
     "scripts": {
     "start:dev": "dotenv -e .env.development nodemon app.js",
     "start:prod": "dotenv -e .env.production node app.js",
-    "start": "nodemon app.js",
+    "start": "node app.js",
     "test": "mocha tests/**/*.test.js"
   },
   "keywords": [],
